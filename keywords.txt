@@ -1,0 +1,159 @@
+# ===================================================================
+# 카테고리별 주제 키워드
+# ===================================================================
+# 형식:
+#   [축:카테고리]  <- 대괄호로 카테고리 헤더 선언
+#   키워드          <- 그 아래 한 줄에 하나씩
+#
+# ★ 필터링(수집) 규칙 [중요]:
+#   논문이 피드에 뜨려면 아래 둘 중 하나를 만족해야 함:
+#     (a) [SYSTEM] 축의 키워드가 하나라도 매칭  (예: lithium-ion, sodium-ion)
+#     (b) [BATTERY] 섹션의 확정 키워드가 매칭   (예: battery, SEI, fast charging)
+#   → COMPONENT(anode/cathode 등)만으로는 통과 못 함 (태깅에만 사용).
+#   → 이렇게 하면 배터리와 무관한 전기화학/생물 논문이 걸러짐.
+#
+#   태깅(카테고리 표시)은 SYSTEM/COMPONENT 축으로 별도 수행.
+#
+# - 대소문자 구분 안 함 / '#' 주석 / 빈 줄 무시
+# ===================================================================
+
+
+# ========== 배터리 확정 키워드 (수집 필터용) ==========
+# 이 단어들이 있으면 "배터리 논문"으로 인정. 배터리 맥락이 강한 것만 엄선.
+[BATTERY]
+battery
+batteries
+rechargeable
+lithium-ion
+li-ion
+sodium-ion
+na-ion
+potassium-ion
+zinc-ion
+lithium metal
+lithium-sulfur
+lithium plating
+dendrite
+SEI
+solid electrolyte interphase
+intercalation
+deintercalation
+state of charge
+state of health
+fast charging
+cycling stability
+coulombic efficiency
+energy density
+cycle life
+electrode material
+cathode material
+anode material
+solid electrolyte
+gel electrolyte
+liquid electrolyte
+electrolyte additive
+
+
+# ========== 축 1: 배터리 시스템 (태깅 + 필터) ==========
+
+[SYSTEM:LIB]
+lithium-ion
+li-ion
+lithium ion
+LIB
+LIBs
+
+[SYSTEM:LMB]
+lithium metal
+li metal
+lithium-metal
+lithium anode
+li anode
+LMB
+lithium plating
+lithium dendrite
+lithium-sulfur
+li-s
+lithium sulfur
+li-s battery
+
+[SYSTEM:SIB]
+sodium-ion
+na-ion
+sodium ion
+sodium battery
+sodium batteries
+SIB
+SIBs
+
+[SYSTEM:ZIB]
+zinc-ion
+zn-ion
+zinc ion
+zinc battery
+zinc batteries
+aqueous zinc
+ZIB
+ZIBs
+
+# 위 어디에도 안 걸리면 자동으로 'others' 시스템으로 분류됨
+
+
+# ========== 축 2: 구성 요소 (태깅용) ==========
+# 주의: 이 단어들은 '태깅'에만 쓰이고, 단독으론 수집 필터를 통과시키지 않음
+# (통과는 [BATTERY] 또는 [SYSTEM] 기준). 그래서 범용 단어도 여기 둬도 안전.
+
+[COMPONENT:Cathode]
+cathode
+positive electrode
+NMC
+NCM
+LFP
+LiFePO4
+LCO
+LiCoO2
+NCA
+layered oxide
+cathode material
+
+[COMPONENT:Anode]
+anode
+negative electrode
+graphite
+silicon anode
+si anode
+hard carbon
+lithium titanate
+LTO
+anode material
+
+[COMPONENT:Electrolyte]
+electrolyte
+electrolytes
+liquid electrolyte
+solid electrolyte
+solid-state electrolyte
+gel electrolyte
+SEI
+solid electrolyte interphase
+electrolyte additive
+
+[COMPONENT:Separator]
+separator
+membrane separator
+polyolefin
+
+[COMPONENT:Binder]
+binder
+PVDF
+CMC binder
+aqueous binder
+
+[COMPONENT:Current collector]
+current collector
+copper foil
+aluminum foil
+cu foil
+al foil
+
+# 위 어디에도 안 걸리면 자동으로 'others' 구성요소로 분류됨
