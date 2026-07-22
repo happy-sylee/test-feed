@@ -1,0 +1,42 @@
+name: 논문 피드 업데이트
+
+# 언제 실행할지
+on:
+  schedule:
+    - cron: "0 21 * * *"   # 매일 UTC 21:00 = 한국시간 오전 6:00
+  workflow_dispatch:        # 버튼 눌러 수동 실행도 가능
+
+# Pages 배포에 필요한 권한
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 가져오기
+        uses: actions/checkout@v4
+
+      - name: 파이썬 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 라이브러리 설치
+        run: pip install feedparser
+
+      - name: 피드 빌드 (index.html 생성)
+        run: python build.py
+
+      - name: Pages 설정
+        uses: actions/configure-pages@v5
+
+      - name: 결과물 업로드
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: Pages에 배포
+        uses: actions/deploy-pages@v4
